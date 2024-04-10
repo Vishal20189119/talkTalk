@@ -1,7 +1,6 @@
 'use strict'
 
 import crypto from 'crypto'
-import bcypt from 'bcrypt';
 
 module.exports = (sequelize, DataTypes)=>{
     const Chat = sequelize.define('Chat', {
@@ -11,12 +10,14 @@ module.exports = (sequelize, DataTypes)=>{
     },{
         timestamps: true,
     })
+
+    Chat.beforeCreate((chat, options)=>{
+        if(!chat.id) chat.id = crypto.randomUUID();
+    })
     
     Chat.associate = function (models){
-        models.Chat.hasMany(models.Message, {foreignKey: 'chatId'});
-        models.Chat.belongsTo(models.User, {foreignKey: 'groupAdmin'});
         models.Chat.hasMany(models.ChatUser, {foreignKey: 'chatId'});
-        models.Chat.belongsToMany(models.User, {through: models.ChatUser});
+        models.Chat.belongsTo(models.User, {foreignKey: 'groupAdmin'});
     }
     return Chat;
 }

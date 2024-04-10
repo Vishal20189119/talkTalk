@@ -10,17 +10,17 @@ module.exports = {
         primaryKey: true,
         defaultValue: Sequelize.UUIDV4()
       },
-      chatId: {
+      content: {
+        type: Sequelize.STRING,
+      },
+      sentBy: {
         type: Sequelize.UUID,
         allowNull: false,
         references:{
-          model: 'Chats',
+          model: 'Users',
           key: 'id',
         },
           onUpdate: 'CASCADE'
-      },
-      content: {
-        type: Sequelize.STRING,
       },
       createdAt: {
         type: Sequelize.DATE,

@@ -10,19 +10,16 @@ let controller = async (req, res, next)=>{
     const {chatId, content} = req.body;
     
     try{
-        // console.log(`\x1b[32m db.chat: ${db} \x1b[0m`);
-        
         const message = await db.Message.create({
             chatId, content
         })
-        // console.log(`\x1b[32m chat: ${chat} \x1b[0m`);
         
         res.status(201).json({
             success: true,
-            messages: 'chat created successfully'
+            messages: 'chat created successfully',
+            result: message
         });
     }catch(error){
-        // console.log(`\x1b[34m The error is coming \x1b[0m`);
         next(error);
     }
 }

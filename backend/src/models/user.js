@@ -22,11 +22,10 @@ module.exports = (sequelize, DataTypes)=>{
         }
     })
     User.associate = function (models){
-        models.User.hasMany(models.MessUser, {foreignKey: 'userId'});
-        models.User.belongsToMany(models.Message, {through: models.MessUser});
-        models.User.hasMany(models.Chat, {foreignKey: 'groupAdmin'});
         models.User.hasMany(models.ChatUser, {foreignKey: 'userId'});
-        models.User.belongsToMany(models.Chat, {through: models.ChatUser});
+        models.User.hasMany(models.Chat, {foreignKey: 'groupAdmin'});
+        models.User.hasMany(models.ReadMessUser, {foreignKey: 'userId'});
+        models.User.hasMany(models.Message, {foreignKey: 'sentBy'});
     }
     return User;
 }

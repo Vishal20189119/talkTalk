@@ -4,22 +4,18 @@ import db from '../../models';
 
 let controller = async (req, res, next)=>{
     const {chatName, isGroupChat} = req.body;
-    
+
     try{
-        // console.log(`\x1b[32m db.chat: ${db} \x1b[0m`);
-        
         const chat = await db.Chat.create({
-            chatName, isGroupChat: 0, 
+            chatName, isGroupChat
         })
-        // console.log(`\x1b[32m chat: ${chat} \x1b[0m`);
-        console.log(chat);
-        
         res.status(201).json({
+            data:chat,
             success: true,
             messages: 'chat created successfully'
         });
     }catch(error){
-        // console.log(`\x1b[34m The error is coming \x1b[0m`);
+        console.log('error ', error);
         next(error);
     }
 }

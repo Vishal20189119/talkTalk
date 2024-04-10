@@ -17,7 +17,7 @@ module.exports = {
       isGroupChat: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue: 0
+        defaultValue: false
       },
       groupAdmin: {
         type: Sequelize.UUID,

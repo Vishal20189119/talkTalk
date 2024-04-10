@@ -6,14 +6,17 @@ import bcypt from 'bcrypt';
 module.exports = (sequelize, DataTypes)=>{
     const Message = sequelize.define('Message', {
         content: DataTypes.STRING,
-        chatId: DataTypes.UUID
+        sentBy: DataTypes.UUID
     },{
         timestamps: true
     })
+    Message.beforeCreate((message, options)=>{
+        if(!message.id) message.id = crypto.randomUUID();
+    })
+
     Message.associate = function (models){
-        models.Message.hasMany(models.MessUser, {foreignKey: 'messId'});
-        models.Message.belongsToMany(models.User, {through: models.MessUser});
-        models.Message.belongsTo(models.Chat, {foreignKey: 'chatId'});
+        models.Message.hasMany(models.ReadMessUser, {foreignKey: 'messId'});
+        models.Message.belongsTo(models.User, {foreignKey: 'sentBy'});
     }
     return Message;
 }

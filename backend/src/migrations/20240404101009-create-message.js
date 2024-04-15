@@ -22,6 +22,15 @@ module.exports = {
         },
           onUpdate: 'CASCADE'
       },
+      chatId: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        references:{
+          model: 'Chats',
+          key: 'id',
+        },
+          onUpdate: 'CASCADE'
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false

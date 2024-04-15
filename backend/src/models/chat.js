@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes)=>{
     
     Chat.associate = function (models){
         models.Chat.hasMany(models.ChatUser, {foreignKey: 'chatId'});
+        models.Chat.hasMany(models.Message, {foreignKey: 'chatId'});
         models.Chat.belongsTo(models.User, {foreignKey: 'groupAdmin'});
     }
     return Chat;

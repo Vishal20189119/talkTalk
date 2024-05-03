@@ -3,8 +3,8 @@ import passport from 'passport';
 import { restRouter } from "./api";
 import cors from 'cors';
 import './passport';
-
 import db from './models';
+import randomConnect from './randomConnLogic';
 const app = express();
 
 app.use(cors({
@@ -31,6 +31,16 @@ db.sequelize.authenticate()
 })
 
 const PORT = 4000;
-app.listen(PORT, ()=>{
+
+const server = app.listen(PORT, ()=>{
     console.log(`The app is running on port ${PORT}`);
 })
+
+const io = require('socket.io')(server, {
+    pingTimeout:60000,
+    cors: {
+        origin: "http://localhost:3000",
+    },
+});
+
+randomConnect(io);

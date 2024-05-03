@@ -8,10 +8,11 @@ import db from '../../models';
 
 let controller = async (req, res, next)=>{
     const {chatId, content} = req.body;
+    const sentBy = req.user.id;
     
     try{
         const message = await db.Message.create({
-            chatId, content
+            chatId, content, sentBy
         })
         
         res.status(201).json({

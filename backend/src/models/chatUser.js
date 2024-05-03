@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes)=>{
     },{
         timestamps: true,
     })
+    ChatUser.beforeCreate((chatUser, options)=>{
+        if(!chatUser.id) chatUser.id = crypto.randomUUID();
+    })
     
     ChatUser.associate = function (models){
         models.ChatUser.belongsTo(models.Chat, {foreignKey: 'chatId'});

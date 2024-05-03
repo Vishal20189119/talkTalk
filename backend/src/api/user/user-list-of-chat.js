@@ -8,12 +8,12 @@ let controller = async (req, res, next)=>{
     const {chatId} = req.body;
     try{
         const user = await db.ChatUser.findAll({
+            attributes: [],
             where: {chatId},
             include: [
                 db.User
             ]
         });
-        
 
         res.status(200).json({
             result: user,

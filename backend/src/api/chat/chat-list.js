@@ -8,6 +8,7 @@ let controller = async (req, res, next)=>{
     const {id} = req.user;
     try{
         const chat = await db.ChatUser.findAll({
+            attributes: [],
             where: {userId: id},
             include: [{
                 model: db.Chat,

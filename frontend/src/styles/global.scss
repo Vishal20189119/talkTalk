@@ -1,6 +1,23 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
 .registerOuterBox{
     margin: auto ;
     border:2px solid black;
-    height: 100px;
-    width: 400px;
+    padding: 20px;
+    width: 300px;
 }
+.registerDivs{
+    border: 2px solid black;
+    margin: 5px;
+    padding: 10px;
+}
+.regInsideDivs{
+    // border: 2px solid green;
+    input{
+        width: 100%;
+    }
+}
+

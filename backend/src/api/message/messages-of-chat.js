@@ -9,11 +9,11 @@ import db from '../../models';
 let controller = async (req, res, next)=>{
     const {chatId} = req.body;
     try{
-        const messages = await db.Chat.findAll({
-            where: {id: chatId},
-            include: [{
-                model: db.Message,
-            }]
+        const messages = await db.Message.findAll({
+            where: {chatId},
+            include: [
+                db.User
+            ]
         });
 
         res.status(200).json({

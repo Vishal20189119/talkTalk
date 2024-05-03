@@ -1,6 +1,7 @@
 import express from 'express';
 import jwtStrategy from '../../strategy/auth/jwtauth';
 import db from '../../models';
+import crypto from 'crypto';
 
 //chatName is the name of the chat
 //isGroupChat tells whether it is to create a group or direct message chat
@@ -22,15 +23,14 @@ let controller = async (req, res, next)=>{
                 chatName
             })
         }
-        if(chat){
-            const chatUserEntries = usersArray.map(userId => ({
-                chatID: chat.id,
-                userId : userId
-            }))
-            chatUserEntries = [...chatUserEntries, {chatId: chat.id, userId: req.user.id}];
+        let chatUserEntries = usersArray.map(userId => ({
+            id: crypto.randomUUID(),
+            chatId: chat.id,
+            userId : userId
+        }))
+        chatUserEntries = [...chatUserEntries, {id: crypto.randomUUID(), chatId: chat.id, userId: req.user.id}];
     
-            await db.ChatUsers.bulkCreate(chatUserEntries, {transaction});
-        }
+        const chatUsersList = await db.ChatUser.bulkCreate(chatUserEntries, {transaction});
         await transaction.commit();
         res.status(201).json({
             data:chat,
@@ -39,7 +39,6 @@ let controller = async (req, res, next)=>{
         });
     }catch(error){
         if(transaction) await transaction.rollback();
-        console.log('error ', error);
         next(error);
     }
 }
